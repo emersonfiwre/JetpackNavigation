@@ -1,14 +1,13 @@
-package br.com.emersonfiwre.navigationdagger.ui.start
+package br.com.emersonfiwre.jetpacknavigation.ui.start
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import br.com.emersonfiwre.navigationdagger.R
-import br.com.emersonfiwre.navigationdagger.extensions.navigateWithAnimations
+import br.com.emersonfiwre.jetpacknavigation.extensions.navigateWithAnimations
 import kotlinx.android.synthetic.main.fragment_start.*
 
 class StartFragment : Fragment() {

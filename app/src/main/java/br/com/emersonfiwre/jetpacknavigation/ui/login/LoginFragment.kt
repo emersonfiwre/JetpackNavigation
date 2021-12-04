@@ -1,5 +1,6 @@
-package br.com.emersonfiwre.navigationdagger.ui.login
+package br.com.emersonfiwre.jetpacknavigation.ui.login
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,17 +9,31 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import br.com.emersonfiwre.jetpacknavigation.MainActivity
+import br.com.emersonfiwre.jetpacknavigation.data.DefaultRepository
 import br.com.emersonfiwre.jetpacknavigation.extensions.dismissError
 import br.com.emersonfiwre.navigationdagger.R
-import br.com.emersonfiwre.navigationdagger.extensions.navigateWithAnimations
+import br.com.emersonfiwre.jetpacknavigation.extensions.navigateWithAnimations
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.login_fragment.*
+import javax.inject.Inject
 
 class LoginFragment : Fragment() {
 
-    private val viewModel: LoginViewModel by activityViewModels()
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel by viewModels<LoginViewModel> { viewModelFactory }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        (requireActivity() as MainActivity).mainComponent.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

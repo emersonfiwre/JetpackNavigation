@@ -1,5 +1,6 @@
 package br.com.emersonfiwre.jetpacknavigation.ui.registration.choosecredentials
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,25 +10,37 @@ import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import br.com.emersonfiwre.jetpacknavigation.MainActivity
 import br.com.emersonfiwre.jetpacknavigation.extensions.dismissError
 import br.com.emersonfiwre.jetpacknavigation.ui.registration.RegistrationViewModel
 import br.com.emersonfiwre.navigationdagger.R
-import br.com.emersonfiwre.navigationdagger.ui.login.LoginViewModel
+import br.com.emersonfiwre.jetpacknavigation.ui.login.LoginViewModel
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.fragment_choose_credentials.*
+import javax.inject.Inject
 
 class ChooseCredentialsFragment : Fragment() {
 
-    private val loginViewModel: LoginViewModel by activityViewModels()
-    private val registrationViewModel: RegistrationViewModel by activityViewModels()
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val loginViewModel by viewModels<LoginViewModel> { viewModelFactory }
+    private val registrationViewModel by viewModels<RegistrationViewModel> { viewModelFactory }
 
     private val args: ChooseCredentialsFragmentArgs by navArgs()
 
     private val navController: NavController by lazy {
         findNavController()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (activity as MainActivity).mainComponent.inject(this)
     }
 
     override fun onCreateView(

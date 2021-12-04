@@ -1,5 +1,6 @@
 package br.com.emersonfiwre.jetpacknavigation.ui.registration.profiledata
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,20 +10,32 @@ import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import br.com.emersonfiwre.jetpacknavigation.MainActivity
 import br.com.emersonfiwre.jetpacknavigation.extensions.dismissError
 import br.com.emersonfiwre.jetpacknavigation.ui.registration.RegistrationViewModel
 import br.com.emersonfiwre.navigationdagger.R
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.fragment_profile_data.*
+import javax.inject.Inject
 
 class ProfileDataFragment : Fragment() {
 
-    private val registrationViewModel: RegistrationViewModel by activityViewModels()
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val registrationViewModel by viewModels<RegistrationViewModel> { viewModelFactory }
 
     private val navController: NavController by lazy {
         findNavController()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (activity as MainActivity).mainComponent.inject(this)
     }
 
     override fun onCreateView(

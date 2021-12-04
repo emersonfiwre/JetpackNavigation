@@ -1,4 +1,4 @@
-package br.com.emersonfiwre.navigationdagger.extensions
+package br.com.emersonfiwre.jetpacknavigation.extensions
 
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions

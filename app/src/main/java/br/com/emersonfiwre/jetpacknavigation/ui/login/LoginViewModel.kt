@@ -1,11 +1,14 @@
-package br.com.emersonfiwre.navigationdagger.ui.login
+package br.com.emersonfiwre.jetpacknavigation.ui.login
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import br.com.emersonfiwre.jetpacknavigation.data.Repository
 import br.com.emersonfiwre.navigationdagger.R
+import javax.inject.Inject
 
-class LoginViewModel : ViewModel() {
+
+class LoginViewModel @Inject constructor(val repository: Repository) : ViewModel() {
 
     sealed class AuthenticationState {
         object Unauthenticated : AuthenticationState()
@@ -38,6 +41,7 @@ class LoginViewModel : ViewModel() {
         if (isValidForm(username, password)) {
             //usuário está autenticado
             this.username = username
+            repository.doLogin()
             _authenticationStateEvent.value = AuthenticationState.Authenticated
         }
     }
